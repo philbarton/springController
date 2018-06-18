@@ -1,14 +1,32 @@
 package uk.co.maclon.claimantService.repository;
 
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.jooq.DSLContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import uk.co.maclon.claimantService.model.Claimant;
 
+import java.util.List;
+
 @Repository
-public interface ClaimantRepository extends CrudRepository<Claimant, String> {
+@Transactional("transactionManager")
+public class ClaimantRepository {
+    private final DSLContext dsl;
 
-    @Query("{ 'nino': ?0 }")
-    Claimant findByNino(String nino);
+    @Autowired
+    public ClaimantRepository(DSLContext dsl) {
+        this.dsl = dsl;
+    }
 
+    public Claimant findByNino(String nino) {
+        return null;
+    }
+
+    public List<Claimant> findAll() {
+        return null;
+    }
+
+    public void save(Claimant claimant) {
+
+    }
 }
