@@ -27,7 +27,7 @@
 
         <flyway.version>4.0.3</flyway.version>
 
-        <db.driver.version>9.1-901-1.jdbc4</db.driver.version>
+        <db.driver.version>42.2.2</db.driver.version>
         <db.url>jdbc:postgresql://localhost:5432/postgres</db.url>
         <db.user>postgres</db.user>
         <db.password>password</db.password>
@@ -43,7 +43,7 @@
             <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${db.driver.version}</version>
         </dependency>
@@ -97,10 +97,37 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <executions>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>update</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+
+                    <changeLogFile>src/main/resources/db.changelog/changelog.yaml</changeLogFile>
+                    <verbose>true</verbose>
+                    <dropFirst>true</dropFirst>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>${db.url}</url>
+                    <username>${db.user}</username>
+                    <password>${db.password}</password>
+
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
