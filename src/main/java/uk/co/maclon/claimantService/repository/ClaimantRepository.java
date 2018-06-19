@@ -5,7 +5,7 @@ import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import uk.co.maclon.claimantService.model.ClaimantDTO;
+import uk.co.maclon.claimantService.model.Claimant;
 import uk.co.maclon.claimantService.model.Gender;
 import uk.co.maclon.claimantService.model.RelationshipStatus;
 import uk.co.maclon.claimantService.model.Title;
@@ -27,7 +27,7 @@ public class ClaimantRepository {
         this.dsl = dsl;
     }
 
-    public ClaimantDTO findByNino(String nino) {
+    public Claimant findByNino(String nino) {
         ClaimantRecord claimantRecord = dsl.selectFrom(CLAIMANT)
                 .where(CLAIMANT.NINO.eq(nino))
                 .fetchOne();
@@ -37,7 +37,7 @@ public class ClaimantRepository {
         return buildDto(claimantRecord);
     }
 
-    public List<ClaimantDTO> findAll() {
+    public List<Claimant> findAll() {
         Result<ClaimantRecord> records = dsl.selectFrom(CLAIMANT).fetch();
         return records
                 .stream()
@@ -45,16 +45,16 @@ public class ClaimantRepository {
                 .collect(Collectors.toList());
     }
 
-    public void save(ClaimantDTO claimantDTO) {
-        dsl.executeInsert(dsl.newRecord(CLAIMANT, claimantDTO));
+    public void save(Claimant claimant) {
+        dsl.executeInsert(dsl.newRecord(CLAIMANT, claimant));
     }
 
-    private Function<ClaimantRecord, ClaimantDTO> dbToDTO() {
+    private Function<ClaimantRecord, Claimant> dbToDTO() {
         return this::buildDto;
     }
 
-    private ClaimantDTO buildDto(ClaimantRecord claimantRecord) {
-        return ClaimantDTO.builder()
+    private Claimant buildDto(ClaimantRecord claimantRecord) {
+        return Claimant.builder()
                 .nino(claimantRecord.getNino())
                 .title(Title.valueOf(claimantRecord.getTitle()))
                 .dateOfBirth(claimantRecord.getDateOfBirth().toLocalDate())
