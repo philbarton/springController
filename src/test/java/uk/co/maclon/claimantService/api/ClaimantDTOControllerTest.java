@@ -9,7 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import uk.co.maclon.claimantService.model.Claimant;
+import uk.co.maclon.claimantService.model.ClaimantDTO;
 import uk.co.maclon.claimantService.model.Gender;
 import uk.co.maclon.claimantService.model.RelationshipStatus;
 import uk.co.maclon.claimantService.model.Title;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = ClaimantController.class)
-public class ClaimantControllerTest {
+public class ClaimantDTOControllerTest {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
@@ -37,28 +37,28 @@ public class ClaimantControllerTest {
 
     @Test
     public void getClaimants() throws Exception {
-        Claimant claimant = createClaimant("AA123456A");
-        List<Claimant> claimants = Collections.singletonList(claimant);
-        when(claimantService.getClaimants()).thenReturn(claimants);
-        mockMvc.perform(get("/api/claimants"))
+        ClaimantDTO claimantDTO = createClaimant("AA123456A");
+        List<ClaimantDTO> claimantDTOS = Collections.singletonList(claimantDTO);
+        when(claimantService.getClaimants()).thenReturn(claimantDTOS);
+        mockMvc.perform(get("/api/claimantDTOS"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$[0].nino").value(claimant.getNino()));
+                .andExpect(jsonPath("$[0].nino").value(claimantDTO.getNino()));
     }
 
     @Test
     public void emptyNino() throws Exception {
-        Claimant claimant = createDuffClaimant();
-        String content = mapper.writeValueAsString(claimant);
+        ClaimantDTO claimantDTO = createDuffClaimant();
+        String content = mapper.writeValueAsString(claimantDTO);
         System.out.println(content);
-        mockMvc.perform(post("/api/claimant")
+        mockMvc.perform(post("/api/claimantDTO")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().is4xxClientError());
     }
 
-    private static Claimant createClaimant(String nino) {
-        return Claimant
+    private static ClaimantDTO createClaimant(String nino) {
+        return ClaimantDTO
                 .builder()
                 .nino(nino)
                 .dateOfBirth(LocalDate.now())
@@ -72,8 +72,8 @@ public class ClaimantControllerTest {
                 .build();
     }
 
-    private static Claimant createDuffClaimant() {
-        return Claimant
+    private static ClaimantDTO createDuffClaimant() {
+        return ClaimantDTO
                 .builder()
                 .dateOfBirth(LocalDate.now())
                 .title(Title.MR)

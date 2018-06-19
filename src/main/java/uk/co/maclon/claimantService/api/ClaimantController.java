@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import uk.co.maclon.claimantService.model.Claimant;
+import uk.co.maclon.claimantService.model.ClaimantDTO;
 import uk.co.maclon.claimantService.service.ClaimantService;
 
 import java.util.List;
@@ -23,18 +23,18 @@ public class ClaimantController {
     }
 
     @GetMapping(value = "/api/claimants", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Claimant>> getClaimants() {
+    public ResponseEntity<List<ClaimantDTO>> getClaimants() {
         return new ResponseEntity<>(claimantService.getClaimants(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/api/claimant/{nino}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Claimant> getClaimantByNino(@PathVariable String nino) {
+    public ResponseEntity<ClaimantDTO> getClaimantByNino(@PathVariable String nino) {
         return new ResponseEntity<>(claimantService.getClaimantByNino(nino), HttpStatus.OK);
     }
 
     @PostMapping("/api/claimant")
-    public ResponseEntity<?> createClaimant(@RequestBody @Validated Claimant claimant) {
-        claimantService.createClaimant(claimant);
+    public ResponseEntity<?> createClaimant(@RequestBody @Validated ClaimantDTO claimantDTO) {
+        claimantService.createClaimant(claimantDTO);
         return ResponseEntity.ok().build();
     }
 }

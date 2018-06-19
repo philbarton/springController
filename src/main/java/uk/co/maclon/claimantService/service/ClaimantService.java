@@ -2,7 +2,7 @@ package uk.co.maclon.claimantService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.co.maclon.claimantService.model.Claimant;
+import uk.co.maclon.claimantService.model.ClaimantDTO;
 import uk.co.maclon.claimantService.repository.ClaimantRepository;
 
 import java.util.ArrayList;
@@ -17,17 +17,15 @@ public class ClaimantService {
         this.repository = repository;
     }
 
-    public List<Claimant> getClaimants() {
-        List<Claimant> claimants = new ArrayList<>();
-        repository.findAll().forEach(claimants::add);
-        return claimants;
+    public List<ClaimantDTO> getClaimants() {
+        return repository.findAll();
     }
 
-    public Claimant getClaimantByNino(String nino) {
+    public ClaimantDTO getClaimantByNino(String nino) {
         return repository.findByNino(nino);
     }
 
-    public void createClaimant(Claimant claimant) {
-        repository.save(claimant);
+    public void createClaimant(ClaimantDTO claimantDTO) {
+        repository.save(claimantDTO);
     }
 }

@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
-public class Claimant {
+public class ClaimantDTO {
 
     @NotBlank(message = "Field cannot be empty")
     private String nino;

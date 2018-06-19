@@ -107,15 +107,15 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <executions>
-                        <execution>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>update</goal>
-                            </goals>
-                        </execution>
-                    </executions>
 
                     <changeLogFile>src/main/resources/db.changelog/changelog.yaml</changeLogFile>
                     <verbose>true</verbose>
@@ -150,6 +150,10 @@
                                     <name>org.jooq.util.postgres.PostgresDatabase</name>
                                     <inputSchema>public</inputSchema>
                                     <includes>.*</includes>
+                                    <excludes>
+                                        databasechangelog
+                                        | databasechangeloglock
+                                    </excludes>
                                 </database>
                                 <target>
                                     <packageName>uk.co.maclon.db</packageName>
