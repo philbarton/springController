@@ -1,6 +1,6 @@
 # springController
 
-Example using flyway, jooq on postgres
+Example using liquibase, jooq on postgres
 
 ## Start Postgres using docker
 ````
@@ -10,7 +10,23 @@ docker run --name jsa -e POSTGRES_PASSWORD=password -d postgres
 ````
 docker run -it --rm --link jsa:postgres postgres psql -h postgres -U postgres
 ````
-## Run from command line
+
+## liquibase 
 ````
- mvn spring-boot:run
+ mvn resources:resources liquibase:update
+ ````
+ 
+## jooq
+````
+ mvn generate-sources
+ ````
+ 
+## Package
+````
+ mvn package
+ ````
+ 
+## run
+````
+ java -jar target/springController-0.0.1-SNAPSHOT.jar
  ````
