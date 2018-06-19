@@ -31,6 +31,9 @@ public class ClaimantRepository {
         ClaimantRecord claimantRecord = dsl.selectFrom(CLAIMANT)
                 .where(CLAIMANT.NINO.eq(nino))
                 .fetchOne();
+        if (claimantRecord == null) {
+            return null;
+        }
         return buildDto(claimantRecord);
     }
 
