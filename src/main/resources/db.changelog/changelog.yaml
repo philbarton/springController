@@ -14,12 +14,80 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: first_name
-                  type: varchar(255)
+                  name: nino
+                  type: varchar(9)
                   constraints:
                     nullable: false
               - column:
-                  name: last_name
-                  type: varchar(255)
+                  name: date_of_birth
+                  type: date
                   constraints:
                     nullable: false
+              - column:
+                  name: title
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: middle_name
+                  type: varchar(30)
+              - column:
+                  name: last_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: relationship_status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: has_partner
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: has_savings
+                  type: boolean
+                  constraints:
+                    nullable: false
+        - insert:
+              tableName: claimant
+              columns:
+                - column:
+                    name: nino
+                    value : "NB888679A"
+                - column:
+                    name: date_of_birth
+                    valueDate: "1965-08-09"
+                - column:
+                    name: title
+                    value : "MR"
+                - column:
+                    name: first_name
+                    value : "phil"
+                - column:
+                    name: last_name
+                    value : "barton"
+                - column:
+                    name: gender
+                    value : "MALE"
+                - column:
+                    name: relationship_status
+                    value : "MARRIED"
+                - column:
+                    name: has_partner
+                    valueBoolean : true
+                - column:
+                    name: has_savings
+                    valueBoolean : false
